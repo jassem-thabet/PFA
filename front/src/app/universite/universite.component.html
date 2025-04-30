@@ -1,0 +1,125 @@
+<div class="layout-container" style="display: flex; min-height: 100vh;">
+  <!-- Sidebar -->
+  <div class="sidebar bg-dark shadow-lg"
+       style="
+      width: 250px;
+      padding: 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;">
+    <br><br><br>
+    <h3 style="color: white;">Actions</h3>
+    <ul style="list-style-type: none; padding: 0;">
+      <li style="margin-bottom: 0.5rem;">
+        <a href="http://localhost:4200/universite" class="btn btn-outline-light navbar-dark" style="text-decoration: none;">List Universties</a>
+      </li>
+    </ul>
+  </div>
+
+  <aside style="width: 250px; background: #f4f4f4; background-image: url('https://cdn-elle.ladmedia.fr/var/plain_site/storage/images/loisirs/livres/news/livres-quels-titres-ont-ete-les-plus-achetes-par-les-francais-confines-3865704/93203706-1-fre-FR/Livres-quels-titres-ont-ete-les-plus-achetes-par-les-Francais-confines.jpg'); background-size: cover; padding: 1rem; height: 100vh; position: fixed;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+      <h2 class="title">Vous trouvez ici les universités</h2>
+      <button (click)="openAddModal()" style="border: none; background: transparent; cursor: pointer;">
+
+      </button>
+    </div>
+  </aside>
+
+  <div *ngIf="isAddModalOpen" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeAddModal()">&times;</span>
+      <h2>Add University</h2>
+      <form (ngSubmit)="addUniversite()" style="display: flex; flex-direction: column;">
+        <input
+          [(ngModel)]="selectedUniversite.nomUniv"
+          name="universityName"
+          placeholder="University Name"
+          required
+          style="padding: 0.5rem; margin-bottom: 0.5rem;">
+        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="button" (click)="closeAddModal()" class="btn btn-secondary">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" style="flex-grow: 1; padding: 2rem; margin-left: 250px;">
+    <!-- Navbar -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <nav class="navbar" style="background-color: #4B0082; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; display: flex; align-items: center;">
+      <div style="display: flex; align-items: center;">
+        <i class="fas fa-graduation-cap" style="color: white; font-size: 1.5rem; margin-right: 8px;"></i>
+        <h2 style="color: white; margin: 0; font-family: 'Georgia', serif;">Universities List</h2>
+      </div>
+      <div style="margin-left: auto;">
+        <button class="btn btn-light"  (click)="openAddModal()">
+          Add University
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg" style="margin-left: 8px;">
+            <line y2="19" y1="5" x2="12" x1="12"></line>
+            <line y2="12" y1="12" x2="19" x1="5"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+
+    <div class="universite-cards">
+      <div *ngFor="let universite of universites" class="card">
+        <svg
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          xml:space="preserve"
+          fill="#cbe6ff"
+          width="120"
+          class="App-logo"
+        >
+        <g>
+          <g>
+            <path d="M11.905,246.817H0.27v30.385h11.636v87.014H0.27v30.385h11.636v117.398h142.473V246.817H11.905z M73.56,453.134H43.175 v-30.051H73.56V453.134z M73.56,335.734H43.175v-30.051H73.56V335.734z M123.11,453.134H92.725v-30.051h30.385V453.134z M123.11,335.734H92.725v-30.051h30.385V335.734z"></path>
+          </g>
+        </g>
+          <g>
+          <g>
+            <path d="M357.621,172.23l-30.385-22.362l-56.043-41.246V84l98.467-36.386L240.806,0v108.623l-56.043,41.246l-30.385,22.362 l-13.786,10.146l13.786,18.204l4.559,6.019l25.826-18.904V512h6.178h130.116h6.178V187.696l25.826,18.903l4.559-6.019 l13.786-18.204L357.621,172.23z M246.417,453.134h-30.385v-30.051h30.385V453.134z M246.417,335.734h-30.385v-30.051h30.385 V335.734z M246.417,218.335h-30.385v-30.051h30.385V218.335z M295.967,453.134h-30.385v-30.051h30.385V453.134z M295.967,335.734 h-30.385v-30.051h30.385V335.734z M295.967,218.335h-30.385v-30.051h30.385V218.335z"></path>
+          </g>
+        </g>
+          <g>
+          <g>
+            <path d="M500.094,364.216v-87.014h11.635v-30.385h-11.637H357.621v265.182h142.473V394.601h11.636v-30.385H500.094z M419.274,453.134h-30.385v-30.051h30.385V453.134z M419.274,335.734h-30.385v-30.051h30.385V335.734z M468.824,453.134h-30.385 v-30.051h30.385V453.134z M468.824,335.734h-30.385v-30.051h30.385V335.734z"></path>
+          </g>
+        </g>
+      </svg>
+        <div *ngIf="isUpdateModalOpen" class="modal">
+          <div class="modal-content">
+            <span class="close" (click)="closeUpdateModal()">&times;</span>
+            <h2>Update University</h2>
+            <form (ngSubmit)="updateUniversite()" style="display: flex; flex-direction: column;">
+              <input
+                [(ngModel)]="selectedUniversite.nomUniv"
+                name="universityName"
+                placeholder="University Name"
+                required
+                style="padding: 0.5rem; margin-bottom: 0.5rem;">
+              <button type="submit" class="btn btn-primary">Update</button>
+              <button type="button" (click)="closeUpdateModal()" class="btn btn-secondary">Cancel</button>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Trigger for Update -->
+
+        <div class="header">University {{ universite.nomUniv }}</div>
+        <div style="display: flex; align-items: center; margin-top: 1rem;">
+          <button class="App-button1" (click)="openUpdateModal(universite)">Update</button>
+          <button class="App-button" (click)="deleteUniversite(universite.idUniv!)" style="margin-right: 0.5rem;">Delete</button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>

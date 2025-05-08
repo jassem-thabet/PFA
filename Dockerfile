@@ -1,14 +1,12 @@
-# Use OpenJDK 17 base image
-FROM openjdk:17-jdk-alpine
-
-# Set the working directory inside the container
+# Stage 1: Build the application
+FROM maven:3.8.6-openjdk-17-slim AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy the built JAR file from your local target folder to the container
-COPY target/kaddem-0.0.1-SNAPSHOT.jar kaddem-0.0.1-SNAPSHOT.jar
-
-# Expose the application's port
+# Stage 2: Run the application
+FROM openjdk:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/kaddem-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8089
-
-# Run the JAR file
-ENTRYPOINT ["java", "-jar", "kaddem-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

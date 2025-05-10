@@ -1,19 +1,12 @@
-# FROM_Nexus
+# Stage 1: Build the application
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
+# Stage 2: Run the application
 FROM openjdk:17-jdk-alpine
-ARG NEXUS_URL
-ARG GROUP_ID
-ARG ARTIFACT_ID
-ARG VERSION
-RUN apk add --no-cache curl && \
-    curl -o app.jar "$NEXUS_URL/repository/KaddemUniversite_SalmaMEJRI_5Arctic4/$(echo $GROUP_ID | tr . /)/$ARTIFACT_ID/$VERSION/$ARTIFACT_ID-$VERSION.jar"
+WORKDIR /app
+COPY --from=build /app/target/kaddem-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8089
-ENTRYPOINT ["java", "-jar", "kaddem-0.0.1-SNAPSHOT.jar"]
-
-#From target
-# FROM openjdk:17
-# WORKDIR /app
-# COPY "target/kaddem-0.0.1-SNAPSHOT.jar" "kaddem-0.0.1-SNAPSHOT.jar"
-# EXPOSE 8089
-# CMD ["java", "-jar", "kaddem-0.0.1-SNAPSHOT.jar"]
-
+ENTRYPOINT ["java", "-jar", "app.jar"]
